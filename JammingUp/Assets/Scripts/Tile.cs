@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum TileType{
+public  enum TileType{
     RED,
     YELLOW,
     BLUE,
