@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GenerateGrid : MonoBehaviour
+public class GridController : MonoBehaviour
 {
     public int width = 16;
     public int height = 16;
-    public float step = 1f;
+    public float cellSpacing = 1f;
     private Grid grid;
     public GameObject prefab;
     public GameObject[,] cells;
@@ -15,7 +15,7 @@ public class GenerateGrid : MonoBehaviour
     void Start()
     {
         //set Grid game object postion 
-        transform.position = new Vector3(-width / 2 * step, -height / 2 * step, 0);
+        transform.position = new Vector3(-width / 2 * cellSpacing, -height / 2 * cellSpacing, 0);
         
         // create array of objects
         cells = new GameObject[width, height];
@@ -29,8 +29,8 @@ public class GenerateGrid : MonoBehaviour
                 cells[i, j] = (GameObject)Instantiate(
                     prefab,
                     new Vector3(
-                        transform.position.x + step * i,
-                        transform.position.y + step * j,
+                        transform.position.x + cellSpacing * i,
+                        transform.position.y + cellSpacing * j,
                         0
                     ),
                     Quaternion.identity
