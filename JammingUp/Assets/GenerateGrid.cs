@@ -14,14 +14,18 @@ public class GenerateGrid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // grid = new Grid(width,height,step);
+        //set Grid game object postion 
         transform.position = new Vector3(-width / 2 * step, -height / 2 * step, 0);
+        
+        // create array of objects
         cells = new GameObject[width, height];
 
+        
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
+                // instantiate cell prefab 
                 cells[i, j] = (GameObject)Instantiate(
                     prefab,
                     new Vector3(
@@ -31,6 +35,7 @@ public class GenerateGrid : MonoBehaviour
                     ),
                     Quaternion.identity
                 );
+                // set initial color of cell
                 cells[i,j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = j%2 == 0 ? i%2 == 0 ? Color.white : Color.black : i%2 == 0 ? Color.black : Color.white;
             }
         }
