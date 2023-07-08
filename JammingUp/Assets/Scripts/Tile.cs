@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using System.Threading;
 
 public class Tile
 {
@@ -11,13 +11,31 @@ public class Tile
     private int y;
     private float cellSize;
     private ColorType type;
-    private SpriteRenderer sprite;
     private Color color;
+    private GameObject tileObject;
 
     public Tile(int x, int y, GameObject go){
-        this.x = x;
-        this.y = y;
-        this.type = (ColorType)ColorHandler.ColorTypeArray.GetValue(UnityEngine.Random.Range(0, ColorHandler.ColorTypeArray.Length));
-        
+        this.x = y;
+        this.y = x;
+        this.type = (ColorType)ColorHandler.ColorTypeArray.GetValue(UnityEngine.Random.Range(0, ColorHandler.ColorTypeArray.Length-1));
+        tileObject = go;
+        color = ColorHandler.COLORS[this.type];
+        tileObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[this.type];
+    }
+
+    public ColorType GetColor()
+    {
+        return type;
+    }
+    public GameObject GetGameObject()
+    {
+        return tileObject;
+    }
+    public void UpdateColor(ColorType newType)
+    {
+        var newColor = ColorHandler.COLORS[newType];
+        type = newType;
+        color = newColor;
+        tileObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = newColor;
     }
 }

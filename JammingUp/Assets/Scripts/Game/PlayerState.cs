@@ -6,37 +6,30 @@ using System.Runtime;
 
 public class PlayerState : MonoBehaviour
 {
-    private TileType[] stateOrder =
+    private ColorType[] stateOrder =
     {
-        TileType.RED,
-        TileType.YELLOW,
-        TileType.BLUE,
-        TileType.GREEN
+        ColorType.RED,
+        ColorType.YELLOW,
+        ColorType.BLUE,
+        ColorType.GREEN
     };
     private int currentState = 0;
-    public TileType currentType = 0;
-
-    private void Awake()
-    {
-        ColorHandler.COLORS.Add(TileType.RED, Color.red);
-        ColorHandler.COLORS.Add(TileType.BLUE, Color.blue);
-        ColorHandler.COLORS.Add(TileType.YELLOW, Color.yellow);
-        ColorHandler.COLORS.Add(TileType.GREEN, Color.green);
-    }
+    [SerializeField] ColorType currentType;
 
     // Start is called before the first frame update
     void Start()
     {
         stateOrder = stateOrder.OrderBy(e => Random.Range(0f, 100f)).ToArray();
-        
+        currentType = stateOrder[currentState];
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[
-            stateOrder[currentState]
-        ];
+        // color the player 
+        this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[stateOrder[currentState]];
+        
+        // listen for color change input
         if (Input.GetKeyDown(KeyCode.Space))
         {
             currentState = (currentState + 1) % stateOrder.Length;

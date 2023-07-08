@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridController : MonoBehaviour
+public class MapController : MonoBehaviour
 {
     public int width = 16;
     public int height = 16;
@@ -15,7 +15,7 @@ public class GridController : MonoBehaviour
     void Start()
     {
         //set Grid game object postion 
-        transform.position = new Vector3(-width / 2 * cellSpacing, -height / 2 * cellSpacing, 0);
+        transform.position = new Vector3(-width / 2 * cellSpacing, height / 2 * cellSpacing, 0);
 
         Debug.Log(Random.Range(0, width));
 
@@ -34,12 +34,11 @@ public class GridController : MonoBehaviour
                     prefab,
                     new Vector3(
                         transform.position.x + cellSpacing * i,
-                        transform.position.y + cellSpacing * j,
+                        transform.position.y -1 - cellSpacing * j,
                         0
                     ),
                     Quaternion.identity
                 ));
-                // set initial color of cell
 
             }
         }
