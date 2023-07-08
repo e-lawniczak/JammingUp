@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,11 @@ public class MapController : MonoBehaviour
     private Grid grid;
     public GameObject prefab;
     public Tile[,] cells;
+
+    // moving tiles
+    private float timer = 0f;
+    private float moveTick = 2f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +39,7 @@ public class MapController : MonoBehaviour
                     prefab,
                     new Vector3(
                         transform.position.x + cellSpacing * i,
-                        transform.position.y -1 - cellSpacing * j,
+                        transform.position.y - 1 - cellSpacing * j,
                         0
                     ),
                     Quaternion.identity
@@ -44,5 +50,34 @@ public class MapController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() { }
+    void Update()
+    {
+        timer += Time.deltaTime;
+        if (timer >= moveTick)
+        {
+            moveGrid();
+            timer = 0f;
+        }
+    }
+
+    // TODO: swapping rows
+    private void moveGrid()
+    {
+        for (int i = 0; i < cells.GetLength(0); i++)
+        {
+
+        }
+    }
+    private void moveGrid_swap(int rowIndexA, int rowIndexB)
+    {
+        //int n = cells.GetLength(1);
+        //Tile[] tmpArray = new Tile[cells.GetLength(1)];
+        //for (int i = 0; i < n; i++)
+        //    tmpArray[i] = cells[rowIndexA, i];
+
+        //for (int j = 0;j < n; j++)
+        //{
+        //    cells[rowIndexB, j] = tmpArray[j];
+        //}
+    }
 }
