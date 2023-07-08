@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 10f;
     public Transform movePoint;
-    private bool axisXInUse = false; 
+    private bool axisXInUse = false;
     private bool axisYInUse = false;
 
     // handle grid interaction
@@ -16,12 +16,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int currentY;
     [SerializeField] GameObject map;
     MapController mapControler;
+    PlayerState playerState;
+    [SerializeField] ColorType state;
     private Tile currentTile;
 
 
     private void Awake()
     {
-       mapControler =  map.GetComponent<MapController>();  
+        mapControler = map.GetComponent<MapController>();
+        playerState = gameObject.GetComponent<PlayerState>();
     }
     void Start()
     {
@@ -29,14 +32,17 @@ public class PlayerController : MonoBehaviour
         currentX = 8;
         currentY = 15;
         currentTile = mapControler.cells[currentX, currentY];
+        state = playerState.GetCurrentState();
     }
 
     // Update is called once per frame
     void Update()
     {
+        state = playerState.GetCurrentState();
         movePlayer();
         calculateMovePoint();
         currentTile = mapControler.cells[currentX, currentY];
+
     }
 
     private void movePlayer()
@@ -122,20 +128,43 @@ public class PlayerController : MonoBehaviour
     /// <returns></returns>
     private bool checkMoveState(float input, bool isHorizontal)
     {
+        Tile nextTile;
         if (isHorizontal)
         {
-            if (input < 0f && currentX == 0)
-                return true;
-            else if (input > 0f && currentX == 15)
-                return true;
+            if (input < 0f)
+            {
+                // move left
+                nextTile = mapControler.cells[currentX - 1, currentY];
+                return checkMoveState_checkState(nextTile);
+            }
+            else if (input > 0f)
+            {
+                //move right
+                nextTile = mapControler.cells[currentX + 1, currentY];
+                return checkMoveState_checkState(nextTile);
+            }
         }
         else
         {
-            if (input < 0f && currentY == 15)
-                return true;
-            else if (input > 0f && currentY == 0)
-                return true;
+            if (input < 0f)
+            {
+                //move down
+                nextTile = mapControler.cells[currentX, currentY + 1];
+                return checkMoveState_checkState(nextTile);
+            }
+            else if (input > 0f)
+            {
+                //move up
+                nextTile = mapControler.cells[currentX, currentY - 1];
+                return checkMoveState_checkState(nextTile);
+            }
         }
+        return false;
+    }
+    private bool checkMoveState_checkState(Tile nextTile)
+    {
+        if (nextTile.GetColor() != state)
+            return true;
         return false;
     }
     /// <summary>
