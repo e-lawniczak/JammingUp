@@ -20,7 +20,7 @@ public class MapController : MonoBehaviour
 
         // create array of objects
         cells = new Tile[width, height];
-
+        prefab.name = "cell";
 
         for (int i = 0; i < width; i++)
         {

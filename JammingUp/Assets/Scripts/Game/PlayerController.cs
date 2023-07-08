@@ -81,11 +81,11 @@ public class PlayerController : MonoBehaviour
 
         if (Mathf.Abs(inputH) == 1f)
         {
-            // if player is about to move to wrong color tile
-            if (checkMoveState(inputH, true))
-                return;
             // if player is about to get out of the grid - prevent moving
             if (checkOutOfBounds(inputH, true))
+                return;
+            // if player is about to move to wrong color tile
+            if (checkMoveState(inputH, true))
                 return;
             // detect arrow left or arrow right
             if (!axisXInUse)
@@ -104,11 +104,11 @@ public class PlayerController : MonoBehaviour
         }
         else if (Mathf.Abs(inputV) == 1f)
         {
-            // if player is about to move to wrong color tile
-            if (checkMoveState(inputV, false))
-                return;
             // if player is about to get out of the grid - prevent moving
             if (checkOutOfBounds(inputV, false))
+                return;
+            // if player is about to move to wrong color tile
+            if (checkMoveState(inputV, false))
                 return;
             if (!axisYInUse)
             {
