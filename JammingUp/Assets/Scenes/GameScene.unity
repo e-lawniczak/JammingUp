@@ -806,6 +806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentType: 0
+  prevType: 0
 --- !u!1 &1130952233
 GameObject:
   m_ObjectHideFlags: 0
