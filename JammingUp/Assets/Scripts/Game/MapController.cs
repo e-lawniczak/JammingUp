@@ -17,7 +17,6 @@ public class MapController : MonoBehaviour
         //set Grid game object postion 
         transform.position = new Vector3(-width / 2 * cellSpacing, height / 2 * cellSpacing, 0);
 
-        Debug.Log(Random.Range(0, width));
 
         // create array of objects
         cells = new Tile[width, height];

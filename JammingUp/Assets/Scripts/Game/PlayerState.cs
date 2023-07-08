@@ -41,4 +41,8 @@ public class PlayerState : MonoBehaviour
     {
         return currentType;
     }
+    public ColorType[] GetStateOrder()
+    {
+        return stateOrder;
+    }
 }
