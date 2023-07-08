@@ -15,6 +15,10 @@ public class PlayerState : MonoBehaviour
     };
     private int currentState = 0;
     [SerializeField] ColorType currentType;
+    public ColorType prevType;
+    public bool hasChanged { get; set; } = false;
+    public int comboCount { get; set; } = 0;
+    public int score { get; set; } = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +38,14 @@ public class PlayerState : MonoBehaviour
         {
             currentState = (currentState + 1) % stateOrder.Length;
             currentType = stateOrder[currentState];
+            if(prevType != currentType)
+            {
+                hasChanged = true;
+            }
+            else
+            {
+                hasChanged = false;
+            }
         }
     }
 

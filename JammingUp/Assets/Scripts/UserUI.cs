@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UserUI : MonoBehaviour
@@ -9,8 +10,11 @@ public class UserUI : MonoBehaviour
     private float cellSpacing = 1.5f;
     PlayerState playerState;
     private GameObject[] stateTiles = new GameObject[4];
-    private float baseStateOrderDisplayY = 6.5f;
+    private float baseStateOrderDisplayY = 6f;
+    private float displayYOffet = 0.5f;
+    private float baseStateOrderDisplayX = -21f;
     private GameObject currentState;
+    private TextMeshProUGUI scoreText;
 
     private void Awake()
     {
@@ -24,7 +28,7 @@ public class UserUI : MonoBehaviour
             stateTiles[i] = Instantiate(
                     prefab,
                     new Vector3(
-                        -20f + (cellSpacing * i),
+                        baseStateOrderDisplayX + (cellSpacing * i),
                         baseStateOrderDisplayY,
                         0
                     ),
@@ -33,6 +37,7 @@ public class UserUI : MonoBehaviour
             stateTiles[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[playerState.GetStateOrder()[i]];
         }
         currentState = stateTiles[0];
+        scoreText = gameObject.transform.GetChild(2).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -40,10 +45,12 @@ public class UserUI : MonoBehaviour
         for (int i = 0; i < stateTiles.Length; i++)
         {
             if(i != playerState.GetCurrentStateInt())
-                stateTiles[i].transform.position = new Vector3(-20f + (cellSpacing * i), baseStateOrderDisplayY,0);
+                stateTiles[i].transform.position = new Vector3(baseStateOrderDisplayX + (cellSpacing * i), baseStateOrderDisplayY,0);
             else
-                stateTiles[i].transform.position = new Vector3(-20f + (cellSpacing * i), baseStateOrderDisplayY + 0.5f, 0);
-
+                stateTiles[i].transform.position = new Vector3(baseStateOrderDisplayX + (cellSpacing * i), baseStateOrderDisplayY + displayYOffet, 0);
         }
+
+        string scoreTemplate = playerState.comboCount > 1 ? "Points: {0}\nCombo: {1}" : "Points: {0}";
+        scoreText.text = string.Format(scoreTemplate, playerState.score, playerState.comboCount);
     }
 }

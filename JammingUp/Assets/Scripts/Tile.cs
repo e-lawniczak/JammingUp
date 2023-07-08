@@ -21,6 +21,9 @@ public class Tile
         tileObject = go;
         color = ColorHandler.COLORS[this.type];
         tileObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[this.type];
+        if(this.x == 8 && this.y == 15)
+            tileObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[ColorType.WHITE];
+
     }
 
     public ColorType GetColor()

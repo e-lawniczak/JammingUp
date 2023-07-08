@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     private Tile prevTile;
 
 
+
+
+
     private void Awake()
     {
         mapControler = map.GetComponent<MapController>();
@@ -33,8 +36,6 @@ public class PlayerController : MonoBehaviour
         movePoint.parent = null;
         currentX = 8;
         currentY = 15;
-        currentTile = mapControler.cells[currentX, currentY];
-        currentTile.UpdateColor(ColorType.WHITE);
         prevTile = null;
         state = playerState.GetCurrentState();
     }
@@ -51,11 +52,35 @@ public class PlayerController : MonoBehaviour
     private void handleTiles()
     {
         currentTile = mapControler.cells[currentX, currentY];
-        if (currentTile != prevTile)
+        if (currentTile != prevTile && prevTile != null)
         {
-            currentTile.UpdateColor(ColorType.WHITE);
+            if (currentTile.GetColor() != ColorType.WHITE)
+            {
+                calculateScore();
+                currentTile.UpdateColor(ColorType.WHITE);
+                playerState.hasChanged = false;
+                playerState.prevType = playerState.GetCurrentState();
+            }
+            // change player state
+            prevTile = currentTile;
         }
     }
+
+    private void calculateScore()
+    {
+        playerState.score++;
+        if (playerState.hasChanged) // add bonus points for using different state
+        {
+            playerState.comboCount++;
+            playerState.score += playerState.comboCount;
+        }
+        else
+        {
+            playerState.comboCount = 0;
+        }
+
+    }
+
     private void movePlayer()
     {
         // more fluid movement
@@ -100,6 +125,7 @@ public class PlayerController : MonoBehaviour
                 // assign new prev tile
                 prevTile = currentTile;
 
+
             }
         }
         else if (Mathf.Abs(inputV) == 1f)
@@ -122,6 +148,7 @@ public class PlayerController : MonoBehaviour
 
                 // assign new prev tile
                 prevTile = currentTile;
+
             }
         }
 
