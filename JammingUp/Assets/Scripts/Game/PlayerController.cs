@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Windows;
 
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     PlayerState playerState;
     [SerializeField] ColorType state;
     private Tile currentTile;
+    private Tile prevTile;
 
 
     private void Awake()
@@ -32,6 +34,8 @@ public class PlayerController : MonoBehaviour
         currentX = 8;
         currentY = 15;
         currentTile = mapControler.cells[currentX, currentY];
+        currentTile.UpdateColor(ColorType.WHITE);
+        prevTile = null;
         state = playerState.GetCurrentState();
     }
 
@@ -41,10 +45,17 @@ public class PlayerController : MonoBehaviour
         state = playerState.GetCurrentState();
         movePlayer();
         calculateMovePoint();
-        currentTile = mapControler.cells[currentX, currentY];
+        handleTiles();
 
     }
-
+    private void handleTiles()
+    {
+        currentTile = mapControler.cells[currentX, currentY];
+        if (currentTile != prevTile)
+        {
+            currentTile.UpdateColor(ColorType.WHITE);
+        }
+    }
     private void movePlayer()
     {
         transform.position = Vector3.MoveTowards(
@@ -82,6 +93,9 @@ public class PlayerController : MonoBehaviour
                 // modify currentX based on input
                 currentX += (int)inputH;
 
+                // assign new prev tile
+                prevTile = currentTile;
+
             }
         }
         else if (Mathf.Abs(inputV) == 1f)
@@ -102,16 +116,18 @@ public class PlayerController : MonoBehaviour
                 // modify currentY based on input "-" because of how arrays work
                 currentY -= (int)inputV;
 
+                // assign new prev tile
+                prevTile = currentTile;
             }
         }
 
         //unlock movement after ButtonUpEvent
-        if (Mathf.Abs(inputH) == 0f)
+        if (Mathf.Abs(inputH) <= 0.15f)
         {
             axisXInUse = false;
 
         }
-        if (Mathf.Abs(inputV) == 0f)
+        if (Mathf.Abs(inputV) <= 0.15f)
         {
             axisYInUse = false;
 
@@ -163,6 +179,8 @@ public class PlayerController : MonoBehaviour
     }
     private bool checkMoveState_checkState(Tile nextTile)
     {
+        if (nextTile.GetColor() == ColorType.WHITE)
+            return false;
         if (nextTile.GetColor() != state)
             return true;
         return false;
