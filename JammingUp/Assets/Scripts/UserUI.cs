@@ -10,9 +10,9 @@ public class UserUI : MonoBehaviour
     private float cellSpacing = 1.5f;
     PlayerState playerState;
     private GameObject[] stateTiles = new GameObject[4];
-    private float baseStateOrderDisplayY = 6f;
+    private float baseStateOrderDisplayY = 5f;
     private float displayYOffet = 0.5f;
-    private float baseStateOrderDisplayX = -21f;
+    private float baseStateOrderDisplayX = -22f;
     private GameObject currentState;
     private TextMeshProUGUI scoreText;
 

@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     private Tile currentTile;
     private Tile prevTile;
 
+    
+
 
 
 
