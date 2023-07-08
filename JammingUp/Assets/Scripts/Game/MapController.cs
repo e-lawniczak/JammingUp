@@ -9,24 +9,28 @@ public class GridController : MonoBehaviour
     public float cellSpacing = 1f;
     private Grid grid;
     public GameObject prefab;
-    public GameObject[,] cells;
+    public Tile[,] cells;
 
     // Start is called before the first frame update
     void Start()
     {
         //set Grid game object postion 
         transform.position = new Vector3(-width / 2 * cellSpacing, -height / 2 * cellSpacing, 0);
-        
-        // create array of objects
-        cells = new GameObject[width, height];
 
-        
+        Debug.Log(Random.Range(0, width));
+
+        // create array of objects
+        cells = new Tile[width, height];
+
+
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
             {
                 // instantiate cell prefab 
-                cells[i, j] = (GameObject)Instantiate(
+
+
+                cells[i, j] = new Tile(j, i, Instantiate(
                     prefab,
                     new Vector3(
                         transform.position.x + cellSpacing * i,
@@ -34,9 +38,9 @@ public class GridController : MonoBehaviour
                         0
                     ),
                     Quaternion.identity
-                );
+                ));
                 // set initial color of cell
-                cells[i,j].transform.GetChild(0).GetComponent<SpriteRenderer>().color = j%2 == 0 ? i%2 == 0 ? Color.white : Color.black : i%2 == 0 ? Color.black : Color.white;
+
             }
         }
     }

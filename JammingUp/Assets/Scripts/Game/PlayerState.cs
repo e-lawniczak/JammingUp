@@ -13,24 +13,28 @@ public class PlayerState : MonoBehaviour
         TileType.BLUE,
         TileType.GREEN
     };
-    private Dictionary<TileType, Color> colors = new Dictionary<TileType, Color>();
     private int currentState = 0;
     public TileType currentType = 0;
+
+    private void Awake()
+    {
+        ColorHandler.COLORS.Add(TileType.RED, Color.red);
+        ColorHandler.COLORS.Add(TileType.BLUE, Color.blue);
+        ColorHandler.COLORS.Add(TileType.YELLOW, Color.yellow);
+        ColorHandler.COLORS.Add(TileType.GREEN, Color.green);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         stateOrder = stateOrder.OrderBy(e => Random.Range(0f, 100f)).ToArray();
-        colors.Add(TileType.RED, Color.red);
-        colors.Add(TileType.BLUE, Color.blue);
-        colors.Add(TileType.YELLOW, Color.yellow);
-        colors.Add(TileType.GREEN, Color.green);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = colors[
+        this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[
             stateOrder[currentState]
         ];
         if (Input.GetKeyDown(KeyCode.Space))

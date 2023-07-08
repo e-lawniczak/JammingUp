@@ -1,29 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public  enum TileType{
-    RED,
-    YELLOW,
-    BLUE,
-    GREEN,
-    WHITE
-} 
 
 public class Tile
 {
     private int x;
     private int y;
     private float cellSize;
-    private TileType type;
+    private ColorType type;
     private SpriteRenderer sprite;
     private Color color;
 
-    public Tile(int x, int y, float cellSize){
+    public Tile(int x, int y, GameObject go){
         this.x = x;
         this.y = y;
-        this.cellSize = cellSize;
-        sprite = new SpriteRenderer();
-        sprite.color = Color.blue;
+        this.type = (ColorType)ColorHandler.ColorTypeArray.GetValue(UnityEngine.Random.Range(0, ColorHandler.ColorTypeArray.Length));
+        
     }
 }
