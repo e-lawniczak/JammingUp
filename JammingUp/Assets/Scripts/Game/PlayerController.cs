@@ -58,11 +58,15 @@ public class PlayerController : MonoBehaviour
     }
     private void movePlayer()
     {
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            movePoint.position,
-            moveSpeed * Time.deltaTime
-        );
+        // more fluid movement
+        //transform.position = Vector3.MoveTowards(
+        //    transform.position,
+        //    movePoint.position,
+        //    moveSpeed * Time.deltaTime
+        //);
+
+        // grid-snapping feel movement
+        transform.position = movePoint.position;
     }
 
     private void calculateMovePoint()
