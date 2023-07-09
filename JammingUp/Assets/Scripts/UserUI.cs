@@ -7,6 +7,7 @@ public class UserUI : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] GameObject prefab;
+    [SerializeField] Sprite s1;
     private float cellSpacing = 1.5f;
     PlayerState playerState;
     private GameObject[] stateTiles = new GameObject[4];
@@ -16,6 +17,7 @@ public class UserUI : MonoBehaviour
     private GameObject currentState;
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI goldText;
+
 
     private void Awake()
     {
@@ -36,6 +38,7 @@ public class UserUI : MonoBehaviour
                     Quaternion.identity
                 );
             stateTiles[i].transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[playerState.GetStateOrder()[i]];
+            stateTiles[i].transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = s1;
         }
         currentState = stateTiles[0];
         scoreText = gameObject.transform.GetChild(2).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();

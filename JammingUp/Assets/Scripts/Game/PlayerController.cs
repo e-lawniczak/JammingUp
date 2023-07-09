@@ -56,9 +56,10 @@ public class PlayerController : MonoBehaviour
     {
         if (mapController.cells[currentX, currentY] == null) return;
         currentTile = mapController.cells[currentX, currentY];
-        if (prevTile != null && currentTile != prevTile)
-        {
-            if (currentTile.GetColor() != ColorType.WHITE)
+         
+          if (prevTile != null && currentTile != prevTile)
+          {
+              if (currentTile.GetColor() != ColorType.WHITE)
             {
                 handleGold(currentTile);
                 calculateScore();

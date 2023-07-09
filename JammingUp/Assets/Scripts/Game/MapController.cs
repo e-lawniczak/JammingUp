@@ -16,8 +16,11 @@ public class MapController : MonoBehaviour
     // moving tiles
     private float timer = 0f;
     public float defaultMoveTick = 3f;
-    private float moveTick;
+    public float moveTick;
     private int counter = 0;
+    private int counterTreshold = 5;
+    private float moveTickDelta = -.05f;
+    private float lowestMoveTick = 1f;
 
     // handling moving player
     [SerializeField] GameObject playerObj;
@@ -86,15 +89,15 @@ public class MapController : MonoBehaviour
             counter++;
 
         }
-        if (counter >= 5 && moveTick >= .85f)
+        if (counter >= counterTreshold && moveTick >= lowestMoveTick)
         {
-            moveTick -= 0.05f;
+            moveTick += moveTickDelta;
             counter = 0;
         }
     }
 
     public void resetMoveTick(){
-        moveTick = 2f;
+        moveTick = defaultMoveTick;
     }
 
     public void reshuffle(){
@@ -158,5 +161,9 @@ public class MapController : MonoBehaviour
         {
             cells[j, rowIndexB].AssignNewTile(cells[j, rowIndexA]);
         }
+    }
+    public float GetMoveTick()
+    {
+        return moveTick;
     }
 }
