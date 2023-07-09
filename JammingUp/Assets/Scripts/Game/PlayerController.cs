@@ -68,12 +68,14 @@ public class PlayerController : MonoBehaviour
             }
             // change player state
             prevTile = currentTile;
+            FindObjectOfType<AudioManager>().Play("PlayerMove");
         }
     }
 
     private void handleGold(Tile currentTile){
         if(currentTile.getGold()){
             playerState.onGotGold();
+            FindObjectOfType<AudioManager>().Play("GoldAcquired");
             checkGoldStatus();
         }
     }
@@ -83,8 +85,10 @@ public class PlayerController : MonoBehaviour
         int reshuffleEveryXGold = 5;
         if(playerState.gold % resetMoveTickEveryXGold == 0 && playerState.gold % reshuffleEveryXGold != 0){
             mapController.resetMoveTick();
+            FindObjectOfType<AudioManager>().Play("Slowdown");
         }else if (playerState.gold % reshuffleEveryXGold == 0){
             mapController.reshuffle();
+            FindObjectOfType<AudioManager>().Play("Reshuffle");
         }
     }
 

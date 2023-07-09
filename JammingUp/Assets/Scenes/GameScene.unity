@@ -1310,7 +1310,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fed6b572c837f2647a00ac629d11bfcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: Slowdown
+    clip: {fileID: 8300000, guid: 2f32b6d8508ae124b9c7c636ff7a82b7, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: GoldAcquired
+    clip: {fileID: 8300000, guid: 1d1cd2a10780dc746b8e7e81925061b0, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: PlayerMove
+    clip: {fileID: 8300000, guid: 427fdc0922bb2ff4bad221826ec26a95, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: Reshuffle
+    clip: {fileID: 8300000, guid: 03ed4154e4e42d74daa4fbd9514d1342, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
 --- !u!4 &1701411403
 Transform:
   m_ObjectHideFlags: 0
