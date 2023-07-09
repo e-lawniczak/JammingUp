@@ -43,13 +43,9 @@ public class PlayerState : MonoBehaviour
             currentState = (currentState + 1) % stateOrder.Length;
             currentType = stateOrder[currentState];
             if (prevType != currentType)
-            {
                 hasChanged = true;
-            }
             else
-            {
                 hasChanged = false;
-            }
         }
 
     }
@@ -64,17 +60,18 @@ public class PlayerState : MonoBehaviour
         score++;
         if (hasChanged) // add bonus points for using different state
         {
-            comboCount++;
-            score += comboCount;
-            if (comboCount > maxCombo)
-            {
-                maxCombo = comboCount;
-            }
+            incrementAndAddCombo();
         }
         else
-        {
             comboCount = (int)(comboCount / 2);
-        }
+    }
+
+    private void incrementAndAddCombo()
+    {
+        comboCount++;
+        score += comboCount;
+        if (comboCount > maxCombo)
+            maxCombo = comboCount;
     }
 
     public ColorType GetCurrentState()
