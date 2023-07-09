@@ -15,7 +15,24 @@ public static class ColorHandler
     };
     public static Array ColorTypeArray = Enum.GetValues(typeof(ColorType));
 
+    public static ColorType GetNextColor(ColorType currentColor)
+    {
+        Array colors = ColorTypeArray;
+        int currentIndex = Array.IndexOf(colors, currentColor);
+        int nextIndex = (currentIndex + 1) % colors.Length;
+        return (ColorType)colors.GetValue(nextIndex);
+    }
+
+    public static ColorType GetNextColorExceptWhite(ColorType currentColor){
+        ColorType nextColor = GetNextColor(currentColor);
+        if(nextColor == ColorType.WHITE){
+            return GetNextColor(ColorType.WHITE);
+        }else{
+            return nextColor;
+        }
+    }
 }
+
 public enum ColorType
 {
     RED,

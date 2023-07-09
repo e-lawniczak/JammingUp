@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
+using System;
 
 public class PlayerState : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class PlayerState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        stateOrder = stateOrder.OrderBy(e => Random.Range(0f, 100f)).ToArray();
+        stateOrder = stateOrder.OrderBy(e => UnityEngine.Random.Range(0f, 100f)).ToArray();
         currentType = stateOrder[currentState];
     }
 
@@ -85,5 +86,12 @@ public class PlayerState : MonoBehaviour
     public ColorType[] GetStateOrder()
     {
         return stateOrder;
+    }
+
+    public ColorType GetNextPlayerColor(ColorType currentColor)
+    {
+        int currentIndex = Array.IndexOf(stateOrder, currentColor);
+        int nextIndex = (currentIndex + 1) % stateOrder.Length;
+        return (ColorType)stateOrder.GetValue(nextIndex);
     }
 }
