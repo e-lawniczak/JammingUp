@@ -142,6 +142,7 @@ public class MapController : MonoBehaviour
         }
         for (int i = 0; i < cells.GetLength(1); i++)
         {
+            Destroy(cells[i, 0].GetGameObject());
             cells[i, 0] = new Tile(i, 0, Instantiate(
                     prefab,
                     new Vector3(
@@ -151,6 +152,7 @@ public class MapController : MonoBehaviour
                     ),
                     Quaternion.identity
                 ));
+            cells[i, 0].UpdateColor(cells[i, 0].GetColor());
         }
     }
     private void moveGrid_swap(int rowIndexA, int rowIndexB)

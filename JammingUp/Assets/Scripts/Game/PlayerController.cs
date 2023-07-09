@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
         currentTile = mapController.cells[currentX, currentY];
          
           if (prevTile != null && currentTile != prevTile)
-          {
+           {
               if (currentTile.GetColor() != ColorType.WHITE)
             {
                 handleGold(currentTile);
