@@ -16,8 +16,11 @@ public class MapController : MonoBehaviour
     // moving tiles
     private float timer = 0f;
     public float defaultMoveTick = 3f;
-    private float moveTick;
+    public float moveTick;
     private int counter = 0;
+    private int counterTreshold = 5;
+    private float moveTickDelta = -.1f;
+    private float lowestMoveTick = 1f;
 
     // handling moving player
     [SerializeField] GameObject playerObj;
@@ -86,15 +89,15 @@ public class MapController : MonoBehaviour
             counter++;
 
         }
-        if (counter >= 5 && moveTick >= .85f)
+        if (counter >= counterTreshold && moveTick >= lowestMoveTick)
         {
-            moveTick -= 0.05f;
+            moveTick += moveTickDelta;
             counter = 0;
         }
     }
 
     public void resetMoveTick(){
-        moveTick = 2f;
+        moveTick = defaultMoveTick;
     }
 
     public void reshuffle(){
@@ -136,9 +139,10 @@ public class MapController : MonoBehaviour
         for (int i = cells.GetLength(0) - 1; i > 0; i--)
         {
             moveGrid_swap(i - 1, i);
-        }
-        for (int i = 0; i < cells.GetLength(1); i++)
-        {
+         }
+         for (int i = 0; i < cells.GetLength(1); i++)
+         {
+             Destroy(cells[i, 0].GetGameObject());
             cells[i, 0] = new Tile(i, 0, Instantiate(
                     prefab,
                     new Vector3(
@@ -148,6 +152,7 @@ public class MapController : MonoBehaviour
                     ),
                     Quaternion.identity
                 ));
+            cells[i, 0].UpdateColor(cells[i, 0].GetColor());
         }
     }
     private void moveGrid_swap(int rowIndexA, int rowIndexB)
@@ -158,5 +163,9 @@ public class MapController : MonoBehaviour
         {
             cells[j, rowIndexB].AssignNewTile(cells[j, rowIndexA]);
         }
+    }
+    public float GetMoveTick()
+    {
+        return moveTick;
     }
 }

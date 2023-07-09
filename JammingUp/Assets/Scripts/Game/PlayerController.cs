@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private Tile prevTile;
 
     public bool hasPlayerStarted = false;
+    private int resetMoveTickEveryXGold = 20;
+    private int reshuffleEveryXGold = 10;
 
 
 
@@ -56,9 +58,10 @@ public class PlayerController : MonoBehaviour
     {
         if (mapController.cells[currentX, currentY] == null) return;
         currentTile = mapController.cells[currentX, currentY];
-        if (prevTile != null && currentTile != prevTile)
-        {
-            if (currentTile.GetColor() != ColorType.WHITE)
+         
+          if (prevTile != null && currentTile != prevTile)
+           {
+              if (currentTile.GetColor() != ColorType.WHITE)
             {
                 handleGold(currentTile);
                 calculateScore();
@@ -81,8 +84,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void checkGoldStatus(){
-        int resetMoveTickEveryXGold = 3;
-        int reshuffleEveryXGold = 5;
+      
         if(playerState.gold % resetMoveTickEveryXGold == 0 && playerState.gold % reshuffleEveryXGold != 0){
             mapController.resetMoveTick();
             FindObjectOfType<AudioManager>().Play("Slowdown");
