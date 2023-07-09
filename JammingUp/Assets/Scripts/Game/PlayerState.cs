@@ -51,7 +51,7 @@ public class PlayerState : MonoBehaviour
                 hasChanged = false;
             }
         }
-       
+
     }
 
     internal void CalculateScore()
@@ -68,7 +68,7 @@ public class PlayerState : MonoBehaviour
         }
         else
         {
-            comboCount = 0;
+            comboCount = (int)(comboCount / 2);
         }
     }
 

@@ -22,6 +22,7 @@ public class GameOverMenu : MonoBehaviour
         finalScore = PlayerPrefs.GetInt("score");
         maxCombo = PlayerPrefs.GetInt("maxCombo");
         textMeshPro.text = string.Format("Score: {0}\nHighest Combo: {1}", finalScore, maxCombo);
+        textMeshPro.alignment = TextAlignmentOptions.Center;
     }
     public void RestartGame(){
         SceneManager.LoadScene("GameScene");
