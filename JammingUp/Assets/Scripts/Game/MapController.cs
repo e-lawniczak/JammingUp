@@ -120,11 +120,7 @@ public class MapController : MonoBehaviour
 
         for (int j = 0; j < n; j++)
         {
-            cells[j, rowIndexB].AssignNewTile(cells[j, rowIndexA], Instantiate(
-                    prefab,
-                   cells[j, rowIndexB].GetGameObject().transform.position,
-                    Quaternion.identity
-                ));
+            cells[j, rowIndexB].AssignNewTile(cells[j, rowIndexA]);
         }
     }
 }

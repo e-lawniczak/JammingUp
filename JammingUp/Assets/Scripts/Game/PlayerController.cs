@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     private void handleTiles()
     {
         currentTile = mapControler.cells[currentX, currentY];
-        if (currentTile != prevTile && prevTile !== null)
+        if (currentTile != prevTile && !prevTile.Equals(null))
         {
             if (currentTile.GetColor() != ColorType.WHITE)
             {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using Unity.VisualScripting;
 
-public class Tile : MonoBehaviour
+public class Tile
 {
     public int x { get; set;}
     public int y { get; set; }
@@ -49,10 +49,10 @@ public class Tile : MonoBehaviour
     }
 
 
-    public void AssignNewTile(Tile tile, GameObject go)
+    public void AssignNewTile(Tile tile)
     {
-        Destroy(this.tileObject);
-        this.tileObject = go;
+        //Destroy(this.tileObject);
+        //this.tileObject = go;
         this.color = tile.color;
         this.type = tile.type;
         tileObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = tile.color;
