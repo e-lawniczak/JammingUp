@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private Tile prevTile;
 
     public bool hasPlayerStarted = false;
+    private int resetMoveTickEveryXGold = 10;
+    private int reshuffleEveryXGold = 15;
 
 
 
@@ -80,8 +82,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void checkGoldStatus(){
-        int resetMoveTickEveryXGold = 3;
-        int reshuffleEveryXGold = 5;
+      
         if(playerState.gold % resetMoveTickEveryXGold == 0 && playerState.gold % reshuffleEveryXGold != 0){
             mapController.resetMoveTick();
         }else if (playerState.gold % reshuffleEveryXGold == 0){
