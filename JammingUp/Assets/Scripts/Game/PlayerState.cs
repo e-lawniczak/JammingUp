@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Runtime;
+using UnityEngine.SceneManagement;
 
 public class PlayerState : MonoBehaviour
 {
@@ -46,6 +47,10 @@ public class PlayerState : MonoBehaviour
             {
                 hasChanged = false;
             }
+        }
+        if(score >= 256)
+        {
+            SceneManager.LoadScene("GameOver");
         }
     }
 
