@@ -79,9 +79,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void checkGoldStatus(){
-        if(playerState.gold % 10 == 0 && playerState.gold % 50 != 0){
+        int resetMoveTickEveryXGold = 3;
+        int reshuffleEveryXGold = 5;
+        if(playerState.gold % resetMoveTickEveryXGold == 0 && playerState.gold % reshuffleEveryXGold != 0){
             mapController.resetMoveTick();
-        }else if (playerState.gold % 50 == 0){
+        }else if (playerState.gold % reshuffleEveryXGold == 0){
             mapController.reshuffle();
         }
     }

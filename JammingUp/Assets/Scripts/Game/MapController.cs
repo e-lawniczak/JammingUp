@@ -22,10 +22,12 @@ public class MapController : MonoBehaviour
     // handling moving player
     [SerializeField] GameObject playerObj;
     PlayerController playerController;
+    PlayerState playerState;
 
     private void Awake()
     {
         playerController = playerObj.GetComponent<PlayerController>();
+        playerState = playerObj.GetComponent<PlayerState>();
     }
 
 
@@ -96,7 +98,36 @@ public class MapController : MonoBehaviour
     }
 
     public void reshuffle(){
-        //TODO: Implement
+        var playerColorState = playerState.GetCurrentState();
+
+        ColorType nextColor = playerState.GetNextPlayerColor(playerColorState);
+
+        foreach(List<Tile> row in getAllRowsAbovePlayer()){
+            foreach(Tile tile in row){
+                tile.UpdateColor(nextColor);
+            }
+            nextColor = playerState.GetNextPlayerColor(nextColor);
+        }
+    }
+
+    public List<Tile> getAllTilesAbovePlayer(){
+        List<Tile> listOfTiles = new List<Tile>();
+        for(int y=playerController.getCurrentY(); y >= 0; y--){
+            listOfTiles.Add(cells[playerController.getCurrentX(), y]);
+        }
+        return listOfTiles;
+    }
+
+    public List<List<Tile>> getAllRowsAbovePlayer(){
+        List<List<Tile>> listOfRows = new List<List<Tile>>();
+        int playersY = playerController.getCurrentY();
+        for(int y=playersY; y >= 0; y--){
+            listOfRows.Add(new List<Tile>());
+            for(int x=0; x < cells.GetLength(0); x++){
+                listOfRows[playersY - y].Add(cells[x, y]);
+            }
+        }
+        return listOfRows;
     }
 
     // TODO: swapping rows
