@@ -19,7 +19,7 @@ public class UserUI : MonoBehaviour
     private GameObject currentState;
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI goldText;
-    private TextMeshProUGUI timerText;
+    //private TextMeshProUGUI timerText;
 
 
     private void Awake()
@@ -47,7 +47,7 @@ public class UserUI : MonoBehaviour
         currentState = stateTiles[0];
         scoreText = gameObject.transform.GetChild(2).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         goldText = gameObject.transform.GetChild(3).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        timerText = gameObject.transform.GetChild(4).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        //timerText = gameObject.transform.GetChild(4).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -63,9 +63,8 @@ public class UserUI : MonoBehaviour
         string scoreTemplate = playerState.comboCount > 1 ? "Points: {0}\nCombo: {1}" : "Points: {0}";
         scoreText.text = string.Format(scoreTemplate, playerState.score, playerState.comboCount);
 
-        string goldTemplate = "Coins: {0}";
-        goldText.text = string.Format(goldTemplate, playerState.gold);
+        string goldTemplate = "Coins: {0}\nTime left: {1}";
+        goldText.text = string.Format(goldTemplate, playerState.gold, mapController.GetTimeLeft());
 
-        timerText.text = string.Format("Time left: {0}", mapController.GetTimeLeft());
     }
 }
