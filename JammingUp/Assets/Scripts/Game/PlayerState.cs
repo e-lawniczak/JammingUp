@@ -50,10 +50,7 @@ public class PlayerState : MonoBehaviour
                 hasChanged = false;
             }
         }
-        if (score >= 256)
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+       
     }
 
     internal void CalculateScore()
