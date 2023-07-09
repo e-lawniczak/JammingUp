@@ -15,6 +15,7 @@ public class UserUI : MonoBehaviour
     private float baseStateOrderDisplayX = -22f;
     private GameObject currentState;
     private TextMeshProUGUI scoreText;
+    private TextMeshProUGUI goldText;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class UserUI : MonoBehaviour
         }
         currentState = stateTiles[0];
         scoreText = gameObject.transform.GetChild(2).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        goldText = gameObject.transform.GetChild(3).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -52,5 +54,8 @@ public class UserUI : MonoBehaviour
 
         string scoreTemplate = playerState.comboCount > 1 ? "Points: {0}\nCombo: {1}" : "Points: {0}";
         scoreText.text = string.Format(scoreTemplate, playerState.score, playerState.comboCount);
+
+        string goldTemplate = "Gold: {0}";
+        goldText.text = string.Format(goldTemplate, playerState.gold);
     }
 }

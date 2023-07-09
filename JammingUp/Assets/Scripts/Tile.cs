@@ -14,6 +14,11 @@ public class Tile
     private ColorType type;
     private Color color;
     private GameObject tileObject;
+    private bool _hasGold = false;
+    public bool hasGold {get => _hasGold; set {
+        _hasGold = value;
+        UpdateGoldDisplaying();
+    }}
 
     public Tile(int x, int y, GameObject go){
         this.x = y;
@@ -22,7 +27,7 @@ public class Tile
         UpdateColor(getRandomColorType());
         if(this.x == 8 && this.y == 15)
             UpdateColor(ColorType.WHITE);
-
+        hasGold = UnityEngine.Random.Range(0, 100) < 10;
     }
 
     public ColorType GetColor()
@@ -44,6 +49,19 @@ public class Tile
         tileObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = newColor;
     }
 
+    public bool getGold(){
+        if(hasGold){
+            hasGold = false;
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private void UpdateGoldDisplaying(){
+        tileObject.transform.GetChild(1).gameObject.GetComponent<SpriteRenderer>().enabled = hasGold;
+    }
+
     public ColorType getRandomColorType(){
         return (ColorType)ColorHandler.ColorTypeArray.GetValue(UnityEngine.Random.Range(0, ColorHandler.ColorTypeArray.Length-1));
     }
@@ -55,7 +73,9 @@ public class Tile
         //this.tileObject = go;
         this.color = tile.color;
         this.type = tile.type;
+        this.hasGold = tile.hasGold;
         tileObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = tile.color;
+        tile.hasGold = false;
     }
     
 }

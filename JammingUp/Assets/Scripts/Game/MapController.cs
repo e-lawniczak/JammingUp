@@ -55,7 +55,6 @@ public class MapController : MonoBehaviour
                     ),
                     Quaternion.identity
                 ));
-
             }
         }
     }
@@ -89,6 +88,14 @@ public class MapController : MonoBehaviour
             moveTick -= 0.1f;
             counter = 0;
         }
+    }
+
+    public void resetMoveTick(){
+        moveTick = 2f;
+    }
+
+    public void reshuffle(){
+        //TODO: Implement
     }
 
     // TODO: swapping rows

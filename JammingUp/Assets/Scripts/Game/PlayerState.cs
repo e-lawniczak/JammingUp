@@ -22,6 +22,7 @@ public class PlayerState : MonoBehaviour
     public int comboCount { get; set; } = 0;
     public int maxCombo { get; set; } = 0;
     public int score { get; set; } = 0;
+    public int gold { get; set; } = 0;
 
     // Start is called before the first frame update
     void Start()

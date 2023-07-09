@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] int currentX;
     [SerializeField] int currentY;
     [SerializeField] GameObject map;
-    MapController mapControler;
+    MapController mapController;
     PlayerState playerState;
     [SerializeField] ColorType state;
     private Tile currentTile;
@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        mapControler = map.GetComponent<MapController>();
+        mapController = map.GetComponent<MapController>();
         playerState = gameObject.GetComponent<PlayerState>();
     }
     void Start()
@@ -54,12 +54,13 @@ public class PlayerController : MonoBehaviour
     }
     private void handleTiles()
     {
-        if (mapControler.cells[currentX, currentY] == null) return;
-        currentTile = mapControler.cells[currentX, currentY];
+        if (mapController.cells[currentX, currentY] == null) return;
+        currentTile = mapController.cells[currentX, currentY];
         if (prevTile != null && currentTile != prevTile)
         {
             if (currentTile.GetColor() != ColorType.WHITE)
             {
+                handleGold(currentTile);
                 calculateScore();
                 currentTile.UpdateColor(ColorType.WHITE);
                 playerState.hasChanged = false;
@@ -67,6 +68,21 @@ public class PlayerController : MonoBehaviour
             }
             // change player state
             prevTile = currentTile;
+        }
+    }
+
+    private void handleGold(Tile currentTile){
+        if(currentTile.getGold()){
+            playerState.gold += 1;
+            checkGoldStatus();
+        }
+    }
+
+    private void checkGoldStatus(){
+        if(playerState.gold % 10 == 0 && playerState.gold % 50 != 0){
+            mapController.resetMoveTick();
+        }else if (playerState.gold % 50 == 0){
+            mapController.reshuffle();
         }
     }
 
@@ -191,13 +207,13 @@ public class PlayerController : MonoBehaviour
             if (input < 0f)
             {
                 // move left
-                nextTile = mapControler.cells[currentX - 1, currentY];
+                nextTile = mapController.cells[currentX - 1, currentY];
                 return checkMoveState_checkState(nextTile);
             }
             else if (input > 0f)
             {
                 //move right
-                nextTile = mapControler.cells[currentX + 1, currentY];
+                nextTile = mapController.cells[currentX + 1, currentY];
                 return checkMoveState_checkState(nextTile);
             }
         }
@@ -206,13 +222,13 @@ public class PlayerController : MonoBehaviour
             if (input < 0f)
             {
                 //move down
-                nextTile = mapControler.cells[currentX, currentY + 1];
+                nextTile = mapController.cells[currentX, currentY + 1];
                 return checkMoveState_checkState(nextTile);
             }
             else if (input > 0f)
             {
                 //move up
-                nextTile = mapControler.cells[currentX, currentY - 1];
+                nextTile = mapController.cells[currentX, currentY - 1];
                 return checkMoveState_checkState(nextTile);
             }
         }
