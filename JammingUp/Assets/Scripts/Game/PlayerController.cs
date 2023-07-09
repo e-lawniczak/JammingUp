@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private Tile prevTile;
 
     public bool hasPlayerStarted = false;
-    private int resetMoveTickEveryXGold = 20;
+    private int resetMoveTickEveryXGold = 25;
     private int reshuffleEveryXGold = 10;
 
 
@@ -58,10 +58,10 @@ public class PlayerController : MonoBehaviour
     {
         if (mapController.cells[currentX, currentY] == null) return;
         currentTile = mapController.cells[currentX, currentY];
-         
-          if (prevTile != null && currentTile != prevTile)
-           {
-              if (currentTile.GetColor() != ColorType.WHITE)
+
+        if (prevTile != null && currentTile != prevTile)
+        {
+            if (currentTile.GetColor() != ColorType.WHITE)
             {
                 handleGold(currentTile);
                 calculateScore();
@@ -75,20 +75,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void handleGold(Tile currentTile){
-        if(currentTile.getGold()){
+    private void handleGold(Tile currentTile)
+    {
+        if (currentTile.getGold())
+        {
             playerState.onGotGold();
             FindObjectOfType<AudioManager>().Play("GoldAcquired");
             checkGoldStatus();
         }
     }
 
-    private void checkGoldStatus(){
-      
-        if(playerState.gold % resetMoveTickEveryXGold == 0 && playerState.gold % reshuffleEveryXGold != 0){
+    private void checkGoldStatus()
+    {
+
+        if (playerState.gold % resetMoveTickEveryXGold == 0)
+        {
             mapController.resetMoveTick();
             FindObjectOfType<AudioManager>().Play("Slowdown");
-        }else if (playerState.gold % reshuffleEveryXGold == 0){
+        }
+        else if (playerState.gold % reshuffleEveryXGold == 0)
+        {
             mapController.reshuffle();
             FindObjectOfType<AudioManager>().Play("Reshuffle");
         }
@@ -102,7 +108,7 @@ public class PlayerController : MonoBehaviour
     public void forcePLayerMovement(float horizontal, float vertical)
     {
         // since horizontal is either + or - we can just add cuz array indexes are correct
-        currentX += (int)horizontal; 
+        currentX += (int)horizontal;
 
 
         // since array indees are reverted we can subtract both and it will be correctly moved
