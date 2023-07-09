@@ -17,10 +17,10 @@ public class Tile
     public Tile(int x, int y, GameObject go){
         this.x = y;
         this.y = x;
-        this.UpdateColor(getRandomColorType());
         tileObject = go;
+        UpdateColor(getRandomColorType());
         if(this.x == 8 && this.y == 15)
-            this.UpdateColor(ColorType.WHITE);
+            UpdateColor(ColorType.WHITE);
 
     }
 
