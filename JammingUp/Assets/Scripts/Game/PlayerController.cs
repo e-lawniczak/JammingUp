@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private Tile currentTile;
     private Tile prevTile;
 
-    
+    public bool hasPlayerStarted = false;
 
 
 
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour
     private void handleTiles()
     {
         currentTile = mapControler.cells[currentX, currentY];
-        if (currentTile != prevTile && prevTile != null)
+        if (currentTile != prevTile && prevTile !== null)
         {
             if (currentTile.GetColor() != ColorType.WHITE)
             {
@@ -70,19 +71,23 @@ public class PlayerController : MonoBehaviour
 
     private void calculateScore()
     {
-        playerState.score++;
-        if (playerState.hasChanged) // add bonus points for using different state
-        {
-            playerState.comboCount++;
-            playerState.score += playerState.comboCount;
-        }
-        else
-        {
-            playerState.comboCount = 0;
-        }
+        playerState.CalculateScore();
 
     }
+    public void forcePLayerMovement(float horizontal, float vertical)
+    {
+        // since horizontal is either + or - we can just add cuz array indexes are correct
+        currentX += (int)horizontal; 
 
+
+        // since array indees are reverted we can subtract both and it will be correctly moved
+        currentY -= (int)vertical;
+
+
+        movePoint.position += new Vector3(horizontal, vertical, 0);
+        transform.position = movePoint.position;
+        handleTiles();
+    }
     private void movePlayer()
     {
         // more fluid movement
@@ -127,7 +132,7 @@ public class PlayerController : MonoBehaviour
                 // assign new prev tile
                 prevTile = currentTile;
 
-
+                if (!hasPlayerStarted) hasPlayerStarted = true;
             }
         }
         else if (Mathf.Abs(inputV) == 1f)
@@ -150,6 +155,8 @@ public class PlayerController : MonoBehaviour
 
                 // assign new prev tile
                 prevTile = currentTile;
+
+                if (!hasPlayerStarted) hasPlayerStarted = true;
 
             }
         }
@@ -241,5 +248,23 @@ public class PlayerController : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+
+
+    public int getCurrentX()
+    {
+        return currentX;
+    }
+    public int getCurrentY()
+    {
+        return currentY;
+    }
+
+    internal void gameOver()
+    {
+        PlayerPrefs.SetInt("score", playerState.score);
+        PlayerPrefs.SetInt("maxCombo", playerState.maxCombo);
+        SceneManager.LoadScene("GameOver");
     }
 }

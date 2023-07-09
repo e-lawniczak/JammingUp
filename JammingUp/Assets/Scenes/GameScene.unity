@@ -904,6 +904,7 @@ MonoBehaviour:
   height: 16
   cellSpacing: 1
   prefab: {fileID: 1500808328626766277, guid: ab0cc9c09536d8a458e69a13463c74ff, type: 3}
+  playerObj: {fileID: 996666736}
 --- !u!1 &1286041235
 GameObject:
   m_ObjectHideFlags: 0

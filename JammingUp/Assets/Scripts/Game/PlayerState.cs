@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Runtime;
 using UnityEngine.SceneManagement;
+using UnityEngine.Playables;
 
 public class PlayerState : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class PlayerState : MonoBehaviour
     public ColorType prevType;
     public bool hasChanged { get; set; } = false;
     public int comboCount { get; set; } = 0;
+    public int maxCombo { get; set; } = 0;
     public int score { get; set; } = 0;
 
     // Start is called before the first frame update
@@ -33,13 +35,13 @@ public class PlayerState : MonoBehaviour
     {
         // color the player 
         this.gameObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[stateOrder[currentState]];
-        
+
         // listen for color change input
         if (Input.GetKeyDown(KeyCode.Space))
         {
             currentState = (currentState + 1) % stateOrder.Length;
             currentType = stateOrder[currentState];
-            if(prevType != currentType)
+            if (prevType != currentType)
             {
                 hasChanged = true;
             }
@@ -48,9 +50,27 @@ public class PlayerState : MonoBehaviour
                 hasChanged = false;
             }
         }
-        if(score >= 256)
+        if (score >= 256)
         {
             SceneManager.LoadScene("GameOver");
+        }
+    }
+
+    internal void CalculateScore()
+    {
+        score++;
+        if (hasChanged) // add bonus points for using different state
+        {
+            comboCount++;
+            score += comboCount;
+            if (comboCount > maxCombo)
+            {
+                maxCombo = comboCount;
+            }
+        }
+        else
+        {
+            comboCount = 0;
         }
     }
 
