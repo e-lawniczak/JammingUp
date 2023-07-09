@@ -47,14 +47,7 @@ public class MapController : MonoBehaviour
                 // instantiate cell prefab 
 
 
-                cells[i, j] = spawnNewTile(i, j);
-            }
-        }
-    }
-
-    private Tile spawnNewTile(int i, int j)
-    {
-        return new Tile(j, i, Instantiate(
+                cells[i, j] = new Tile(i, j, Instantiate(
                     prefab,
                     new Vector3(
                         transform.position.x + cellSpacing * i,
@@ -63,6 +56,8 @@ public class MapController : MonoBehaviour
                     ),
                     Quaternion.identity
                 ));
+            }
+        }
     }
 
     // Update is called once per frame
@@ -97,7 +92,7 @@ public class MapController : MonoBehaviour
     }
 
     public void resetMoveTick(){
-        moveTick = defaultMoveTick;
+        moveTick = 2f;
     }
 
     public void reshuffle(){
@@ -113,7 +108,15 @@ public class MapController : MonoBehaviour
         }
         for (int i = 0; i < cells.GetLength(1); i++)
         {
-            cells[i, 0] = spawnNewTile(0, i);
+            cells[i, 0] = new Tile(i, 0, Instantiate(
+                    prefab,
+                    new Vector3(
+                        transform.position.x + cellSpacing * i,
+                        transform.position.y - 1 - cellSpacing * 0,
+                        0
+                    ),
+                    Quaternion.identity
+                ));
         }
     }
     private void moveGrid_swap(int rowIndexA, int rowIndexB)

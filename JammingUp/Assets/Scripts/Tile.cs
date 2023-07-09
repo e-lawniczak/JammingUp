@@ -21,8 +21,8 @@ public class Tile
     }}
 
     public Tile(int x, int y, GameObject go){
-        this.x = y;
-        this.y = x;
+        this.x = x;
+        this.y = y;
         tileObject = go;
         UpdateColor(getRandomColorType());
         if(this.x == 8 && this.y == 15)
