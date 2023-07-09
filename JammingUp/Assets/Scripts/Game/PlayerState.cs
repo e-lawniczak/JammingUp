@@ -54,6 +54,11 @@ public class PlayerState : MonoBehaviour
 
     }
 
+    public void onGotGold(){
+        gold += 1;
+        score += 10;
+    }
+
     internal void CalculateScore()
     {
         score++;

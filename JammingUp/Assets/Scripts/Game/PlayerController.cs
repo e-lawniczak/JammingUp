@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
     private void handleGold(Tile currentTile){
         if(currentTile.getGold()){
-            playerState.gold += 1;
+            playerState.onGotGold();
             checkGoldStatus();
         }
     }
