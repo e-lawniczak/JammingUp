@@ -12,7 +12,7 @@ public class UserUI : MonoBehaviour
     private GameObject[] stateTiles = new GameObject[4];
     private float baseStateOrderDisplayY = 5f;
     private float displayYOffet = 0.5f;
-    private float baseStateOrderDisplayX = -22f;
+    private float baseStateOrderDisplayX = -20f;
     private GameObject currentState;
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI goldText;
