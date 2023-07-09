@@ -17,12 +17,10 @@ public class Tile
     public Tile(int x, int y, GameObject go){
         this.x = y;
         this.y = x;
-        this.type = (ColorType)ColorHandler.ColorTypeArray.GetValue(UnityEngine.Random.Range(0, ColorHandler.ColorTypeArray.Length-1));
+        this.UpdateColor(getRandomColorType());
         tileObject = go;
-        color = ColorHandler.COLORS[this.type];
-        tileObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[this.type];
         if(this.x == 8 && this.y == 15)
-            tileObject.transform.GetChild(0).GetComponent<SpriteRenderer>().color = ColorHandler.COLORS[ColorType.WHITE];
+            this.UpdateColor(ColorType.WHITE);
 
     }
 
@@ -34,11 +32,18 @@ public class Tile
     {
         return tileObject;
     }
+    
     public void UpdateColor(ColorType newType)
     {
-        var newColor = ColorHandler.COLORS[newType];
         type = newType;
+
+        var newColor = ColorHandler.COLORS[newType];
         color = newColor;
+        
         tileObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = newColor;
+    }
+
+    public ColorType getRandomColorType(){
+        return (ColorType)ColorHandler.ColorTypeArray.GetValue(UnityEngine.Random.Range(0, ColorHandler.ColorTypeArray.Length-1));
     }
 }
