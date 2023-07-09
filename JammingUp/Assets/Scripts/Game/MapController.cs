@@ -19,7 +19,7 @@ public class MapController : MonoBehaviour
     public float moveTick;
     private int counter = 0;
     private int counterTreshold = 5;
-    private float moveTickDelta = -.05f;
+    private float moveTickDelta = -.1f;
     private float lowestMoveTick = 1f;
 
     // handling moving player
@@ -139,10 +139,10 @@ public class MapController : MonoBehaviour
         for (int i = cells.GetLength(0) - 1; i > 0; i--)
         {
             moveGrid_swap(i - 1, i);
-        }
-        for (int i = 0; i < cells.GetLength(1); i++)
-        {
-            Destroy(cells[i, 0].GetGameObject());
+         }
+         for (int i = 0; i < cells.GetLength(1); i++)
+         {
+             Destroy(cells[i, 0].GetGameObject());
             cells[i, 0] = new Tile(i, 0, Instantiate(
                     prefab,
                     new Vector3(
