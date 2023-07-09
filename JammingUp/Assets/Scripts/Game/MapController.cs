@@ -15,7 +15,8 @@ public class MapController : MonoBehaviour
 
     // moving tiles
     private float timer = 0f;
-    private float moveTick = 3f;
+    public float defaultMoveTick = 3f;
+    private float moveTick;
     private int counter = 0;
 
     // handling moving player
@@ -33,7 +34,7 @@ public class MapController : MonoBehaviour
     {
         //set Grid game object postion 
         transform.position = new Vector3(-width / 2 * cellSpacing, height / 2 * cellSpacing, 0);
-
+        moveTick = defaultMoveTick;
 
         // create array of objects
         cells = new Tile[width, height];
@@ -91,7 +92,7 @@ public class MapController : MonoBehaviour
     }
 
     public void resetMoveTick(){
-        moveTick = 2f;
+        moveTick = defaultMoveTick;
     }
 
     public void reshuffle(){
