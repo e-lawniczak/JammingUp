@@ -15,7 +15,7 @@ public class MapController : MonoBehaviour
 
     // moving tiles
     private float timer = 0f;
-    private float moveTick = 2f;
+    private float moveTick = 3f;
     private int counter = 0;
 
     // handling moving player
@@ -84,14 +84,13 @@ public class MapController : MonoBehaviour
             counter++;
 
         }
-        if (counter >= 2 && moveTick >= 0.5f)
+        if (counter >= 5 && moveTick >= .85f)
         {
-            moveTick -= 0.1f;
+            moveTick -= 0.05f;
             counter = 0;
         }
     }
 
-    // TODO: swapping rows
     private void moveGrid()
     {
         for (int i = cells.GetLength(0) - 1; i > 0; i--)
@@ -114,9 +113,6 @@ public class MapController : MonoBehaviour
     private void moveGrid_swap(int rowIndexA, int rowIndexB)
     {
         int n = cells.GetLength(1);
-        //Tile[] tmpArray = new Tile[cells.GetLength(1)];
-        //for (int i = 0; i < n; i++)
-        //    tmpArray[i] = cells[rowIndexA, i];
 
         for (int j = 0; j < n; j++)
         {
