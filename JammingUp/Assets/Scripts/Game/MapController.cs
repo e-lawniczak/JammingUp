@@ -21,6 +21,8 @@ public class MapController : MonoBehaviour
     private int counterTreshold = 5;
     private float moveTickDelta = -.45f;
     private float lowestMoveTick = .95f;
+    private float timeLimit = 180f;
+    private float globalTimer = 0f;
 
     // handling moving player
     [SerializeField] GameObject playerObj;
@@ -69,6 +71,11 @@ public class MapController : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        globalTimer += Time.deltaTime;
+        if (globalTimer >= timeLimit)
+        {
+            playerController.gameOver();
+        }
         if (timer >= moveTick)
         {
             if (!playerController.hasPlayerStarted)
@@ -97,37 +104,46 @@ public class MapController : MonoBehaviour
         }
     }
 
-    public void resetMoveTick(){
+    public void resetMoveTick()
+    {
         moveTick = defaultMoveTick;
     }
 
-    public void reshuffle(){
+    public void reshuffle()
+    {
         var playerColorState = playerState.GetCurrentState();
 
         ColorType nextColor = playerState.GetNextPlayerColor(playerColorState);
 
-        foreach(List<Tile> row in getAllRowsAbovePlayer()){
-            foreach(Tile tile in row){
+        foreach (List<Tile> row in getAllRowsAbovePlayer())
+        {
+            foreach (Tile tile in row)
+            {
                 tile.UpdateColor(nextColor);
             }
             nextColor = playerState.GetNextPlayerColor(nextColor);
         }
     }
 
-    public List<Tile> getAllTilesAbovePlayer(){
+    public List<Tile> getAllTilesAbovePlayer()
+    {
         List<Tile> listOfTiles = new List<Tile>();
-        for(int y=playerController.getCurrentY(); y >= 0; y--){
+        for (int y = playerController.getCurrentY(); y >= 0; y--)
+        {
             listOfTiles.Add(cells[playerController.getCurrentX(), y]);
         }
         return listOfTiles;
     }
 
-    public List<List<Tile>> getAllRowsAbovePlayer(){
+    public List<List<Tile>> getAllRowsAbovePlayer()
+    {
         List<List<Tile>> listOfRows = new List<List<Tile>>();
         int playersY = playerController.getCurrentY();
-        for(int y=playersY; y >= 0; y--){
+        for (int y = playersY; y >= 0; y--)
+        {
             listOfRows.Add(new List<Tile>());
-            for(int x=0; x < cells.GetLength(0); x++){
+            for (int x = 0; x < cells.GetLength(0); x++)
+            {
                 listOfRows[playersY - y].Add(cells[x, y]);
             }
         }
@@ -140,10 +156,10 @@ public class MapController : MonoBehaviour
         for (int i = cells.GetLength(0) - 1; i > 0; i--)
         {
             moveGrid_swap(i - 1, i);
-         }
-         for (int i = 0; i < cells.GetLength(1); i++)
-         {
-             Destroy(cells[i, 0].GetGameObject());
+        }
+        for (int i = 0; i < cells.GetLength(1); i++)
+        {
+            Destroy(cells[i, 0].GetGameObject());
             cells[i, 0] = new Tile(i, 0, Instantiate(
                     prefab,
                     new Vector3(
@@ -168,5 +184,14 @@ public class MapController : MonoBehaviour
     public float GetMoveTick()
     {
         return moveTick;
+    }
+
+    internal string GetTimeLeft()
+    {
+        int minutes = Mathf.FloorToInt((timeLimit - globalTimer) / 60F);
+        int seconds = Mathf.FloorToInt((timeLimit - globalTimer) - minutes * 60);
+
+        string niceTime = string.Format("{0:0}:{1:00}", minutes, seconds);
+        return niceTime;
     }
 }

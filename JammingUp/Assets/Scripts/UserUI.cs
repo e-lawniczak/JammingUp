@@ -6,10 +6,12 @@ using UnityEngine;
 public class UserUI : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    [SerializeField] GameObject map;
     [SerializeField] GameObject prefab;
     [SerializeField] Sprite s1;
     private float cellSpacing = 1.5f;
     PlayerState playerState;
+    MapController mapController;
     private GameObject[] stateTiles = new GameObject[4];
     private float baseStateOrderDisplayY = 5f;
     private float displayYOffet = 0.5f;
@@ -17,12 +19,14 @@ public class UserUI : MonoBehaviour
     private GameObject currentState;
     private TextMeshProUGUI scoreText;
     private TextMeshProUGUI goldText;
+    private TextMeshProUGUI timerText;
 
 
     private void Awake()
     {
         playerState = player.GetComponent<PlayerState>();
         prefab.name = "state order cell";
+        mapController = map.GetComponent<MapController>();
     }
     void Start()
     {
@@ -43,14 +47,15 @@ public class UserUI : MonoBehaviour
         currentState = stateTiles[0];
         scoreText = gameObject.transform.GetChild(2).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         goldText = gameObject.transform.GetChild(3).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        timerText = gameObject.transform.GetChild(4).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
     {
         for (int i = 0; i < stateTiles.Length; i++)
         {
-            if(i != playerState.GetCurrentStateInt())
-                stateTiles[i].transform.position = new Vector3(baseStateOrderDisplayX + (cellSpacing * i), baseStateOrderDisplayY,0);
+            if (i != playerState.GetCurrentStateInt())
+                stateTiles[i].transform.position = new Vector3(baseStateOrderDisplayX + (cellSpacing * i), baseStateOrderDisplayY, 0);
             else
                 stateTiles[i].transform.position = new Vector3(baseStateOrderDisplayX + (cellSpacing * i), baseStateOrderDisplayY + displayYOffet, 0);
         }
@@ -60,5 +65,7 @@ public class UserUI : MonoBehaviour
 
         string goldTemplate = "Coins: {0}";
         goldText.text = string.Format(goldTemplate, playerState.gold);
+
+        timerText.text = string.Format("Time left: {0}", mapController.GetTimeLeft());
     }
 }
