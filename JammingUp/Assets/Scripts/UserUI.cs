@@ -55,7 +55,7 @@ public class UserUI : MonoBehaviour
         string scoreTemplate = playerState.comboCount > 1 ? "Points: {0}\nCombo: {1}" : "Points: {0}";
         scoreText.text = string.Format(scoreTemplate, playerState.score, playerState.comboCount);
 
-        string goldTemplate = "Gold: {0}";
+        string goldTemplate = "Coins: {0}";
         goldText.text = string.Format(goldTemplate, playerState.gold);
     }
 }
