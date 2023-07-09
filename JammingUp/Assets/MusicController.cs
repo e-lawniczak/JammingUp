@@ -19,6 +19,6 @@ public class MusicController : MonoBehaviour
 
     void Update()
     {
-        audioSource.pitch = Mathf.Max(3f - mapController.GetMoveTick(), 1f);
+        //audioSource.pitch = Mathf.Max(2f - mapController.GetMoveTick(), 1.5f);
     }
 }

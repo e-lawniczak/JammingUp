@@ -24,8 +24,8 @@ public class PlayerController : MonoBehaviour
     private Tile prevTile;
 
     public bool hasPlayerStarted = false;
-    private int resetMoveTickEveryXGold = 25;
-    private int reshuffleEveryXGold = 10;
+    private int resetMoveTickEveryXGold = 35;
+    private int reshuffleEveryXGold = 15;
 
 
 

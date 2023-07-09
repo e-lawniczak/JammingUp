@@ -19,8 +19,8 @@ public class MapController : MonoBehaviour
     public float moveTick;
     private int counter = 0;
     private int counterTreshold = 5;
-    private float moveTickDelta = -.1f;
-    private float lowestMoveTick = 1f;
+    private float moveTickDelta = -.45f;
+    private float lowestMoveTick = .95f;
 
     // handling moving player
     [SerializeField] GameObject playerObj;
@@ -92,6 +92,7 @@ public class MapController : MonoBehaviour
         if (counter >= counterTreshold && moveTick >= lowestMoveTick)
         {
             moveTick += moveTickDelta;
+            moveTick = Mathf.Max(moveTick, lowestMoveTick);
             counter = 0;
         }
     }
