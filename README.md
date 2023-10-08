@@ -1,5 +1,5 @@
 # JammingUp
-This is a game I made together with my friend [(link to his linked-in profile)](https://www.linkedin.com/in/andrzejgolski/),  in order to participate in [Mini Game Jam 136](https://itch.io/jam/mini-jam-136-cycles)
+This is a game I made together with my friend [(link to his linked-in profile)](https://www.linkedin.com/in/andrzejgolski/),  in order to participate in [Mini Jam 136](https://itch.io/jam/mini-jam-136-cycles)
 The game was made in Unity. 
 
 ## About the game
